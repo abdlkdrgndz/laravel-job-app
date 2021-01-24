@@ -4,4 +4,6 @@ Cron üzerinden <b>php artisan schedule:run</b> veya <b>php artisan minute:updat
 
 Cron ile her bir dakikada bir işlem kontrolü yapacak şekilde ayarlandı. { Console > Commands > everyMinute.php }
 
+tknsyn db create sql eklendi.
+
 { Laravel Job/Task Worker App on Cron }
