@@ -16,6 +16,6 @@ class DeviceTableSeeder extends Seeder
         /*
          * 10.000 adet kayıt oluşturalım.
          */
-        \App\Models\Device::factory(10000)->create();
+        \App\Models\Device::factory(90000)->create();
     }
 }
