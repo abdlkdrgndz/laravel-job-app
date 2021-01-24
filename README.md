@@ -1,1 +1,1 @@
-Laravel Job/Task App
+Laravel Job/Task Worker App
