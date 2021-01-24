@@ -51,11 +51,12 @@ class UpdateStatusProcess implements ShouldQueue
 
         $allStatus = [];
         foreach (Cache::get("datas") as $keys => $vals) {
+                $vals = json_decode($vals, true);
                 if(Str::substr($vals['receipt'], -2) % 6 != 0) {
                     Device::where('id', $vals['id'])->update(['status' => rand(0,1)]);
                     array_push($allStatus, "id" . Str::substr($vals['receipt'], -2) . ": İşlem başarısız.");
                 } else {
-                    Device::where('id', $vals['id'])->update(['status' => 0]);
+                    Device::where('id', $vals['id'])->update(['status' => rand(0,1)]);
                 }
         }
 
