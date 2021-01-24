@@ -44,16 +44,16 @@ class UpdateStatusProcess implements ShouldQueue
             ->get();
 
         $allStatus = [];
-        foreach ($getAllDatas->chunk(1000) as $values) {
+        foreach ($getAllDatas->chunk(1000) as $keys => $values) {
             foreach ($values as $vals) {
                 if(Str::substr($vals['receipt'], -2) % 6 != 0) {
                     Device::where('id', $vals['id'])->update(['status' => rand(0,1)]);
-                    array_push($allStatus, Str::substr($vals['receipt'], -2) . ": İşlem başarısız.");
+                    array_push($allStatus, "id" . Str::substr($vals['receipt'], -2) . ": İşlem başarısız.");
                 } else {
                     Device::where('id', $vals['id'])->update(['status' => 0]);
                 }
             }
-            echo "1000 adet kayıt işlendi.";
+            echo $keys+1 . ". dizine ait 1000 adet kayıt işlendi. >> ";
         }
 
         return response()->json(['result' => $allStatus]);
