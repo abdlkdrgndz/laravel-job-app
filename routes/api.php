@@ -19,4 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::post('test' , [StatusController::class, 'updateProcess'])->middleware(['throttle:test']);
+Route::post('test' , [StatusController::class, 'updateProcess'])->middleware(['throttle:test']);
