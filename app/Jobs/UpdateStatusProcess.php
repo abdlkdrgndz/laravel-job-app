@@ -40,17 +40,20 @@ class UpdateStatusProcess implements ShouldQueue
         $getAllDatas = Device::where('expire_date', '>', Carbon::now()->format('Y-m-d'))
             ->where('status', '<>', Device::STATUS_CANCEL)
             ->skip(0)
-            ->take(100)
+            ->take(10000)
             ->get();
 
         $allStatus = [];
-        foreach ($getAllDatas as $vals) {
-            if(Str::substr($vals['receipt'], -2) % 6 != 0) {
-                Device::where('id', $vals['id'])->update(['status' => rand(0,1)]);
-                array_push($allStatus, Str::substr($vals['receipt'], -2) . ": İşlem başarısız.");
-            } else {
-                Device::where('id', $vals['id'])->update(['status' => 0]);
+        foreach ($getAllDatas->chunk(1000) as $values) {
+            foreach ($values as $vals) {
+                if(Str::substr($vals['receipt'], -2) % 6 != 0) {
+                    Device::where('id', $vals['id'])->update(['status' => rand(0,1)]);
+                    array_push($allStatus, Str::substr($vals['receipt'], -2) . ": İşlem başarısız.");
+                } else {
+                    Device::where('id', $vals['id'])->update(['status' => 0]);
+                }
             }
+            echo "1000 adet kayıt işlendi.";
         }
 
         return response()->json(['result' => $allStatus]);
